@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:#fff;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* INTRO */
+.intro{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  animation:fadeOut 2s forwards;
+  animation-delay:3.5s;
+}
+.intro h1{
+  font-family:'Dancing Script';
+  font-size:2.6rem;
+}
+@keyframes fadeOut{
+  to{opacity:0;visibility:hidden}
+}
+
+/* LOCK */
+.lock{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:9998;
+}
+.lock p{color:#ff4b5c}
+.lock input{
+  padding:12px;
+  border-radius:25px;
+  border:none;
+}
+.lock button{
+  margin-top:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:25px;
+  background:#ff3d5a;
+  color:#fff;
+}
+
+/* CONTENT */
+.content{
+  display:none;
+  height:100vh;
+  overflow:auto;
+}
+
+h1{
+  font-family:'Dancing Script';
+  font-size:2.4rem;
+  margin-top:20px;
+}
+
+/* SLIDER GALLERY */
+.slider{
+  display:flex;
+  overflow-x:auto;
+  gap:15px;
+  padding:20px;
+  scroll-snap-type:x mandatory;
+}
+
+.slider img{
+  flex:0 0 70%;
+  height:200px;
+  object-fit:cover;
+  border-radius:20px;
+  scroll-snap-align:center;
+  transition:0.4s;
+  transform:scale(0.85);
+  opacity:0.6;
+}
+
+/* CENTER IMAGE EFFECT */
+.slider img.active{
+  transform:scale(1);
+  opacity:1;
+}
+
+/* MESSAGE */
+.message{
+  padding:15px 25px;
+  font-size:1.2rem;
+  min-height:90px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+button.main{
+  padding:14px 30px;
+  border:none;
+  border-radius:30px;
+  background:#ff3d5a;
+  color:#fff;
+  margin-bottom:40px;
+}
+
+/* HEART */
+.heart{
+  position:fixed;
+  bottom:0;
+  animation:floatUp 6s linear infinite;
+}
+@keyframes floatUp{
+  100%{transform:translateY(-900px);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro">
+  <h1>Something Special For You ❤️</h1>
+</div>
+
+<!-- LOCK -->
+<div class="lock" id="lock">
+  <h2>Enter Secret Code 🔐</h2>
+  <p>Hint: What was our first dish we ate together? 🍽️</p>
+  <input type="password" id="pass">
+  <button onclick="unlock()">Unlock ❤️</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+
+<h1>Hey Beautiful ❤️</h1>
+
+<!-- SLIDER -->
+<div class="slider" id="slider">
+  <img src="https://drive.google.com/thumbnail?id=1ltHyiFM_0Zhm1vE9YNGlf7n2MboI2zuO">
+  <img src="https://drive.google.com/thumbnail?id=11S-9E_-Coy7cwJ6-PaxYeHOSbU07ufBW">
+  <img src="https://drive.google.com/thumbnail?id=1fROcKTwq00XEUkkHHxIEBTMnbOP38VyJ">
+  <img src="https://drive.google.com/thumbnail?id=1hQP70rsIQoHz7bonRADHc17n4GyJlSNn">
+  <img src="https://drive.google.com/thumbnail?id=1kKCxwPrNerqQlAlbkIiw7mbtDPK2yIpR">
+  <img src="https://drive.google.com/thumbnail?id=1W1LwdNO2gC4u7Lo3EPmR-ePAbiEYsAFg">
+  <img src="https://drive.google.com/thumbnail?id=1cTiB8eURTv5i2o4QV8cDqSsK7ycgurFa">
+</div>
+
+<div class="message" id="msg">Tap below ❤️</div>
+<button class="main" onclick="typeLove()">Tap Me 💖</button>
+
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<script>
+function unlock(){
+  const p=document.getElementById('pass').value;
+  if(p && p.toLowerCase()==='momo'){
+    document.getElementById('lock').style.display='none';
+    document.getElementById('content').style.display='block';
+    document.getElementById('music').play();
+  }else alert('Wrong password 😢');
+}
+
+/* FIXED TEXT */
+const text="I don’t know how to say it perfectly... but you mean everything to me ❤️✨";
+let i=0;
+
+function typeLove(){
+  i=0;
+  const msg=document.getElementById('msg');
+  msg.innerHTML="";
+  const t=setInterval(()=>{
+    msg.innerHTML += text[i]===" " ? "&nbsp;" : text[i];
+    i++;
+    if(i>=text.length) clearInterval(t);
+  },40);
+}
+
+/* SLIDER CENTER ZOOM */
+const slider=document.getElementById("slider");
+const imgs=slider.querySelectorAll("img");
+
+function updateCenter(){
+  const center=window.innerWidth/2;
+  imgs.forEach(img=>{
+    const rect=img.getBoundingClientRect();
+    const imgCenter=rect.left+rect.width/2;
+    const diff=Math.abs(center-imgCenter);
+    if(diff<100){
+      img.classList.add("active");
+    }else{
+      img.classList.remove("active");
+    }
+  });
+}
+slider.addEventListener("scroll",updateCenter);
+updateCenter();
+
+/* HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},400);
+</script>
+
+</body>
+</html>
