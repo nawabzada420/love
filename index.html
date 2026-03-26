@@ -192,14 +192,10 @@ let i = 0;
 function typeLove() {
   i = 0;
   const msg = document.getElementById('msg');
-  msg.innerHTML = "";
+  msg.innerText = "";   // 👈 use innerText instead of innerHTML
   
   const t = setInterval(() => {
-    if (text[i] === "\n") {
-      msg.innerHTML += "<br>";
-    } else {
-      msg.innerHTML += text[i] === " " ? "&nbsp;" : text[i];
-    }
+    msg.innerText += text[i];  // 👈 no manual <br> or &nbsp;
     i++;
     if (i >= text.length) clearInterval(t);
   }, 40);
