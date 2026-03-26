@@ -186,18 +186,23 @@ function unlock(){
 }
 
 /* FIXED TEXT */
-const text="I don’t know how to say it perfectly... but you mean everything to me ❤️✨";
-let i=0;
+const text = "I don’t know how to say it perfectly...\nBut you mean everything to me ❤️✨";
+let i = 0;
 
-function typeLove(){
-  i=0;
-  const msg=document.getElementById('msg');
-  msg.innerHTML="";
-  const t=setInterval(()=>{
-    msg.innerHTML += text[i]===" " ? "&nbsp;" : text[i];
+function typeLove() {
+  i = 0;
+  const msg = document.getElementById('msg');
+  msg.innerHTML = "";
+  
+  const t = setInterval(() => {
+    if (text[i] === "\n") {
+      msg.innerHTML += "<br>";
+    } else {
+      msg.innerHTML += text[i] === " " ? "&nbsp;" : text[i];
+    }
     i++;
-    if(i>=text.length) clearInterval(t);
-  },40);
+    if (i >= text.length) clearInterval(t);
+  }, 40);
 }
 
 /* SLIDER CENTER ZOOM */
